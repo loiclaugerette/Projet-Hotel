@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Employé</title>
+</h:head>
+<body>
+<h:outputStylesheet name="css/bootstrap.css" />
+<h:outputScript name="resources/js/bootstrap.js" />
+<ui:include src="navbar.xhtml" />
+
+<div class="container">
+  	
+<br></br>
+<br></br>
+
+		<div id="page-wrapper">
+                    <h1 class="page-header">Employé</h1>
+            <!-- /.row -->
+            	
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        <h:form>
+                            <h:outputLabel value="Hotel"></h:outputLabel>
+                            <h:selectOneMenu class="form-control" value="#{employeBean.idHotel}">
+                            	<f:ajax event="change" update=":formListEmploye:tbl,:formAddEmploye" render=":formListEmploye:tbl :formAddEmploye" listener="#{employeBean.selectHotel}" />
+					  			<f:selectItem itemLabel="" itemValue="" />
+		                        <c:forEach var="hotel" items="#{employeBean.hotels}">
+		                            <f:selectItem itemLabel="#{hotel.nom}" itemValue="#{hotel.id}" />
+		                        </c:forEach>
+		                    </h:selectOneMenu>
+		                </h:form>
+                        </div>
+                    </div><!-- /.panel -->
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Liste des employés
+                        </div>
+                        
+                        <div class="panel-body">
+							<h:form id="formListEmploye">
+							    <p:dataTable id="tbl" var="employe" value="#{employeBean.employes}"
+							                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+							                 paginator="true" rows="10" style="margin-bottom:20px">
+					
+							        <p:column>
+							            <f:facet name="header">
+							                <h:outputText value="Nom" />
+							            </f:facet>
+							            <h:outputText value="#{employe.nom}" />
+							        </p:column>
+							 
+							        <p:column>
+							            <f:facet name="header">
+							                <h:outputText value="Prénom"/>
+							            </f:facet>
+							            <h:outputText value="#{employe.prenom}" />
+							        </p:column>
+							 
+							        <p:column>
+							            <f:facet name="header">
+							                <h:outputText value="Date de naissance" />
+							            </f:facet>
+							            <h:outputText value="#{employe.dateNaissance}" />
+							        </p:column>
+							 
+							        <p:column>
+							            <f:facet name="header">
+							                <h:outputText value="Contrat" />
+							            </f:facet>
+							            <h:outputText value="#{employe.getClass().getSimpleName()}" />
+							        </p:column>
+
+							        <p:column>
+							            <f:facet name="header">
+							                <h:outputText value="Date d'embauche" />
+							            </f:facet>
+							            <h:outputText value="#{employe.dateEmbauche}" />
+							        </p:column>
+							 
+							        <p:column>
+							            <f:facet name="header">
+							                <h:outputText value="Role"/>
+							            </f:facet>
+							            <h:outputText value="#{employe.role}" />
+							        </p:column>
+							 
+							        <p:column>
+							            <f:facet name="header">
+							                <h:outputText value="Salaire" />
+							            </f:facet>
+							            <h:outputText value="#{employe.salaire}" />
+							        </p:column>
+							 
+							        <p:column>
+							            <f:facet name="header">
+							                <h:outputText value="Modifier" />
+							            </f:facet>
+							            <p:commandButton action="#{employeBean.getOne(employe.idPersonne)}" update=":formUpdateEmploye:carDetail" oncomplete="PF('updateEmploye').show()" icon="ui-icon-search" title="View" />
+							        </p:column>
+							    </p:dataTable>  
+							</h:form>
+							
+							<h:form id="formAddEmploye">
+				            <c:if test="#{employeBean.idHotel ne 0}">
+							<div class="form-groupe">
+								<div>
+									<p:commandButton value="Ajouter un employé en CDI" type="button" onclick="PF('addCDI').show();" />
+								</div>
+								<br></br>
+								<div>
+									<p:commandButton value="Ajouter un employé en CDD" type="button" onclick="PF('addCDD').show();" />
+								</div>
+								<br></br>
+								<div>
+									<p:commandButton value="Ajouter un stagiaire" type="button" onclick="PF('addStagiaire').show();" />
+								</div>
+							</div>
+							</c:if>
+				            </h:form>
+							    
+					    	<p:dialog header="Modification" widgetVar="updateEmploye" modal="true">
+								<h:form id="formUpdateEmploye">
+									<p:outputPanel id="carDetail" style="text-align:center;">
+						            <p:panelGrid  columns="2">
+										<h:outputText value="Nom : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.nom}"></h:inputText>
+										<h:outputText value="Prénom : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.prenom}"></h:inputText>
+										<h:outputText value="Date de Naissance : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.employe.dateNaissance}" />
+										<h:outputText value="Rue : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.adresse.rue}"></h:inputText>
+										<h:outputText value="Code Postal : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.adresse.codePostal}"></h:inputText>
+										<h:outputText value="Ville : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.adresse.ville}"></h:inputText>
+										<h:outputText value="Pays : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.adresse.pays}"></h:inputText>
+										<h:outputText value="Date d'embauche : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.employe.dateEmbauche}" />
+										<h:outputText value="Role : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.role}"></h:inputText>
+										<h:outputText value="Salaire : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.employe.salaire}"></h:inputText>
+										<h:commandButton value="Modifier" action="#{employeBean.update}" class="btn btn-info"/>
+									</p:panelGrid>
+									</p:outputPanel>
+								</h:form>
+							</p:dialog>
+							 
+							<p:dialog header="Ajout d'un employé en CDI" widgetVar="addCDI" modal="true">
+								<h:form id="formAddCDI">
+									<p:outputPanel id="carDetailCDI" style="text-align:center;">
+						            <p:panelGrid  columns="2">
+										<h:outputText value="Nom : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.nom}"></h:inputText>
+										<h:outputText value="Prénom : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.prenom}"></h:inputText>
+										<h:outputText value="Date de Naissance : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}" />
+										<h:outputText value="Rue : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.rue}"></h:inputText>
+										<h:outputText value="Code Postal : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.codePostal}"></h:inputText>
+										<h:outputText value="Ville : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.ville}"></h:inputText>
+										<h:outputText value="Pays : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.pays}"></h:inputText>
+										<h:outputText value="Date d'embauche : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}" />
+										<h:outputText value="Role : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.role}"></h:inputText>
+										<h:outputText value="Salaire : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.salaire}"></h:inputText>
+										<h:commandButton value="Ajouter un employé en CDI" action="#{employeBean.addCDI}" class="btn btn-info"/>
+									</p:panelGrid>
+									</p:outputPanel>
+								</h:form>
+							</p:dialog>
+							
+							<p:dialog header="Ajout d'un employé en CDD" widgetVar="addCDD" modal="true">
+								<h:form id="formAddCDD">
+									<p:outputPanel id="carDetailCDD" style="text-align:center;">
+						            <p:panelGrid  columns="2">
+										<h:outputText value="Nom : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.nom}"></h:inputText>
+										<h:outputText value="Prénom : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.prenom}"></h:inputText>
+										<h:outputText value="Date de Naissance : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}" />
+										<h:outputText value="Rue : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.rue}"></h:inputText>
+										<h:outputText value="Code Postal : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.codePostal}"></h:inputText>
+										<h:outputText value="Ville : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.ville}"></h:inputText>
+										<h:outputText value="Pays : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.pays}"></h:inputText>
+										<h:outputText value="Date d'embauche : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}" />
+										<h:outputText value="Date de fin de contrat : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateSortie}" />
+										<h:outputText value="Role : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.role}"></h:inputText>
+										<h:outputText value="Salaire : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.salaire}"></h:inputText>
+										<h:outputText value="Prime de précarité : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.primeDePrecarite}"></h:inputText>
+										<h:commandButton value="Ajouter un employé en CDD" action="#{employeBean.addCDD}" class="btn btn-info"/>
+									</p:panelGrid>
+									</p:outputPanel>
+								</h:form>
+							</p:dialog>
+							
+							<p:dialog header="Ajout d'un stagiaire" widgetVar="addStagiaire" modal="true">
+								<h:form id="formAddStagiaire">
+									<p:outputPanel id="carDetailStagiaire" style="text-align:center;">
+						            <p:panelGrid  columns="2">
+										<h:outputText value="Nom : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.nom}"></h:inputText>
+										<h:outputText value="Prénom : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.prenom}"></h:inputText>
+										<h:outputText value="Date de Naissance : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateNaissance}" />
+										<h:outputText value="Rue : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.rue}"></h:inputText>
+										<h:outputText value="Code Postal : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.codePostal}"></h:inputText>
+										<h:outputText value="Ville : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.ville}"></h:inputText>
+										<h:outputText value="Pays : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.pays}"></h:inputText>
+										<h:outputText value="Date de début de stage : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateEmbauche}" />
+										<h:outputText value="Date de fin de stage : "></h:outputText>
+										<p:calendar requiredMessage="obligatoire" required="true" value="#{employeBean.dateSortie}" />
+										<h:outputText value="Role : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.role}"></h:inputText>
+										<h:outputText value="Salaire : "></h:outputText>
+										<h:inputText requiredMessage="obligatoire" required="true" value="#{employeBean.salaire}"></h:inputText>
+										<h:commandButton value="Ajouter un stagiaire" action="#{employeBean.addStagiaire}" class="btn btn-info" />
+									</p:panelGrid>
+									</p:outputPanel>
+								</h:form>
+							</p:dialog>
+
+                        </div><!-- /.panel-body -->
+                        
+                    </div>
+                    <!-- /.panel -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+</div>
+
+</body>
+</html>

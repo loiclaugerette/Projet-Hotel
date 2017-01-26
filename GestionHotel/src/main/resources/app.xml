@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+	<context:component-scan base-package="com.adaming.myapp" />
+	
+	<mvc:resources mapping="/webjars/**" location="/webjars/"/>
+    
+    <!-- injection de Consommation -->
+    <bean id="ConsommationDaoImpl" class="com.adaming.myapp.dao.ConsommationDaoImpl"></bean>
+    <bean id="ConsommationServiceImpl" class="com.adaming.myapp.service.ConsommationServiceImpl">
+        <property name="dao" ref="ConsommationDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Paiement -->
+    <bean id="PaiementDaoImpl" class="com.adaming.myapp.dao.PaiementDaoImpl"></bean>
+    <bean id="PaiementServiceImpl" class="com.adaming.myapp.service.PaiementServiceImpl">
+        <property name="dao" ref="PaiementDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Personne -->
+    <bean id="PersonneDaoImpl" class="com.adaming.myapp.dao.PersonneDaoImpl"></bean>
+    <bean id="PersonneServiceImpl" class="com.adaming.myapp.service.PersonneServiceImpl">
+        <property name="dao" ref="PersonneDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Produit -->
+    <bean id="ProduitDaoImpl" class="com.adaming.myapp.dao.ProduitDaoImpl"></bean>
+    <bean id="ProduitServiceImpl" class="com.adaming.myapp.service.ProduitServiceImpl">
+        <property name="dao" ref="ProduitDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Hotel -->
+    <bean id="HotelDaoImpl" class="com.adaming.myapp.dao.HotelDaoImpl"></bean>
+    <bean id="HotelServiceImpl" class="com.adaming.myapp.service.HotelServiceImpl">
+        <property name="dao" ref="HotelDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Reservation -->
+    <bean id="ReservationDaoImpl" class="com.adaming.myapp.dao.ReservationDaoImpl"></bean>
+    <bean id="ReservationServiceImpl" class="com.adaming.myapp.service.ReservationServiceImpl">
+        <property name="dao" ref="ReservationDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Facture -->
+    <bean id="FactureDaoImpl" class="com.adaming.myapp.dao.FactureDaoImpl"></bean>
+    <bean id="FactureServiceImpl" class="com.adaming.myapp.service.FactureServiceImpl">
+        <property name="dao" ref="FactureDaoImpl"></property>
+    </bean>
+
+    <!-- injection de Chambre -->
+    <bean id="ChambreDaoImpl" class="com.adaming.myapp.dao.ChambreDaoImpl"></bean>
+    <bean id="ChambreServiceImpl" class="com.adaming.myapp.service.ChambreServiceImpl">
+        <property name="dao" ref="ChambreDaoImpl"></property>
+    </bean>
+    	
+
+	<bean id="datasource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://localhost/Projet_Gestion_Hotel"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value=""></property>
+	</bean>
+	<bean id="PersistenceUnitManager"
+		class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+		<property name="defaultDataSource" ref="datasource"></property>
+		<property name="persistenceXmlLocations">
+			<list>
+				<value>classpath*:META-INF/persistence.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="EntityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitManager" ref="PersistenceUnitManager"></property>
+		<property name="persistenceUnitName" value="UP_JsfGestionStagiaire"></property>
+	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="EntityManagerFactory"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<context:annotation-config></context:annotation-config>
+   
+</beans>
+

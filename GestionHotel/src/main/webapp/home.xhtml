@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:c="http://java.sun.com/jsp/jstl/core"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ 
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Gestion d'hôtels</title>
+	<style>
+	.Bimage{
+     background:url(#{request.contextPath}/resources/img/batesMotel.jpg);
+      background-size:100%;
+ 	}
+ 	</style>
+</h:head>
+
+<h:body styleClass="Bimage">
+<h:outputStylesheet name="css/bootstrap.css" />
+<h:outputScript name="resources/js/bootstrap.js" />
+
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+
+<ui:include src="navbar.xhtml" />
+
+<!--     Page Content
+    <div class="container">
+
+        Jumbotron Header
+        <header class="jumbotron hero-spacer">
+            <h1>Bienvenue !</h1>
+            <p>Cette application vous permet de ... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, 
+            ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique 
+            quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.
+            Pour commencer, créer et personnalisez votre premier hôtel :</p>
+             <p:button outcome="hotel" value="Créer un hôtel">
+	   			<f:param name="creerHotel" value="10" />
+			</p:button>
+        </header>
+
+        <hr></hr>
+
+        Title
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Fonctionnalités</h3>
+            </div>
+        </div>
+        /.row
+
+        Page Features
+        <div class="row text-center">
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/800x500" alt=""></img>
+                    <div class="caption">
+                        <h3>Réservations</h3>
+                        <p>Enregistrez les réservations de vos clients...</p>
+                        <p>
+	                        <p:button outcome="hotel" value="Réservez !">
+	   						 	<f:param name="reservation" value="10" />
+							</p:button>
+                            <p:button outcome="hotel" value="Plus d'infos">
+	   						 	<f:param name="infoReserv" value="10" />
+							</p:button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/800x500" alt=""></img>
+                    <div class="caption">
+                        <h3>Paiement</h3>
+                        <p>Enregistrez les paiement, imprimez et éditez les factures aisément.</p>
+                        <p>
+                            <a href="#" class="btn btn-primary">À la caisse !</a> <a href="#" class="btn btn-default">Plus d'info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/800x500" alt=""></img>
+                    <div class="caption">
+                        <h3>Employés</h3>
+                        <p>Gérer les équipes par hôtels ... </p>
+                        <p>
+                            <a href="#" class="btn btn-primary">Buy Now!</a> <a href="#" class="btn btn-default">Plus d'info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6 hero-feature">
+                <div class="thumbnail">
+                    <img src="http://placehold.it/800x500" alt=""></img>
+                    <div class="caption">
+                        <h3>Stock</h3>
+                        <p>Outil de gestion des stocks.</p>
+                        <p>
+                            <a href="#" class="btn btn-primary">Go !</a> <a href="#" class="btn btn-default">Plus d'info</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        /.row
+
+        <hr></hr>
+
+        Footer
+        <footer>
+            <div class="row">
+                <div class="col-lg-12" style="text-align : center;">
+                    <p>Copyright &#169; MyHotels 2016</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    /.container
+    
+	 -->
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+</h:body>
+</html>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:c="http://java.sun.com/jsp/jstl/core"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Réservation</title>
+</h:head>
+<body>
+
+<h:outputStylesheet name="css/bootstrap.css" />
+<h:outputScript name="resources/js/bootstrap.js" />
+	<ui:include src="navbar.xhtml" />
+	
+<div class="container" style="margin-top : 40px">
+	
+	<h1 class="page-header">Réservation</h1>
+		
+	 <div class="panel panel-default"> <!--  style="margin-bottom : 50px" -->
+         <div class="panel-heading">
+               Client
+          </div>
+          <div class="panel-body">
+          
+
+        <h:form id="formulaireClient">
+ 			
+				<h:outputLabel value="Hotel: " />
+            		<h:selectOneMenu value="#{reservationBean.id}" class="form-control" style="margin-bottom : 20px;">
+                        <c:forEach var="category" items="#{reservationBean.hotels}">
+                            <f:selectItem itemLabel="#{category.nom}" itemValue="#{category.id}">
+                            </f:selectItem>
+                        </c:forEach>
+						<p:ajax update="client" event="click" listener="#{reservationBean.onChange}"/>
+                    </h:selectOneMenu>
+      
+				<h:outputLabel value="Client: " />
+            		<h:selectOneMenu id="client" value="#{reservationBean.idClient}" class="form-control">
+                        <c:forEach var="category" items="#{reservationBean.clients}">
+                            <f:selectItem itemLabel="#{category.nom} #{category.prenom}" itemValue="#{category.idPersonne}" />
+                        </c:forEach>
+                        <p:ajax event="click" listener="#{reservationBean.saveClient2}"/>
+                    </h:selectOneMenu>
+
+        	 <br></br>
+        	<br></br>
+      
+    	
+	    <p:accordionPanel id="accordion" multiple="true" style="margin-bottom:20px;" activeIndex="-1">
+	   	  <p:tab title="Ajouter client">
+	       	<p:messages id="msgs" />
+				<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+					<p:outputLabel value="Nom : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.nom}"></p:inputText>
+					
+					<p:outputLabel value="Prénom : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.prenom}"></p:inputText>
+					
+					<p:outputLabel value="Rue : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.rue}"></p:inputText>
+					
+					<p:outputLabel value="Code postal : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.codePostal}"></p:inputText>
+					
+					<p:outputLabel value="Ville : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.ville}"></p:inputText>
+					
+					<p:outputLabel value="Pays : "></p:outputLabel>
+					<p:outputLabel value=" "></p:outputLabel>
+					<p:inputText requiredMessage="obligatoire" required="true" value="#{reservationBean.pays}"></p:inputText>
+					
+					<p:outputLabel value="Date de naissance:"/>
+	        		<p:calendar yearRange="c-70:c+0" locale="fr" navigator="true" pattern="yyyy-MMM-dd" value="#{reservationBean.dateDeNaissance}"/>
+	
+					<p:commandButton value="Enregistrer" action="#{reservationBean.saveClient}" update="formulaireClient"/>
+				</h:panelGrid>
+				
+				
+		  </p:tab>
+		</p:accordionPanel>
+	</h:form>
+	</div><!-- panel body Client-->
+</div><!-- panel panel-default Client-->  
+
+<div class="panel panel-default">
+         <div class="panel-heading">
+               Réservations
+          </div>
+          <div class="panel-body">
+          
+		<h:form id="reservations" style="margin-bottom:30px">
+			<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel value="Date d'arrivée:" />
+        		<p:calendar value="#{reservationBean.dateArrivee}"/>
+				<p:outputLabel value="Date de départ:" />
+        		<p:calendar value="#{reservationBean.dateDepart}"/>
+				<p:commandButton value="Chercher" actionListener="#{reservationBean.checkDates}" update="chambres"/>
+			</h:panelGrid>
+		</h:form>
+	
+	
+	<h:form id="chambres">
+	<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+	<p:dataTable var="res" value="#{reservationBean.chambres}">
+  
+  		<p:column headerText="Id">
+        	<h:outputText value="#{res.id}" />
+ 	   	</p:column>
+ 	   	
+ 		<p:column headerText="Type">
+        	<h:outputText value="#{res.getClass().getSimpleName()}" />
+ 	   	</p:column>
+ 	   	
+    	<p:column headerText="Numéro">
+        	<h:outputText value="#{res.numeroChambre}" />
+ 	   	</p:column>
+ 
+    	<p:column headerText="Description">
+        	<h:outputText value="#{res.description}" />
+    	</p:column>
+    	
+    		<p:column headerText="Prix">
+        	<h:outputText value="#{res.prix}" />
+    	</p:column>
+    		
+
+	</p:dataTable>
+	</h:panelGrid>
+	<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+	<h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+	<p:outputLabel value="Chambre à réserver: " />
+    	<h:selectOneMenu value="#{reservationBean.idChambre}" class="form-control">
+        	<c:forEach var="category" items="#{reservationBean.chambres}">
+            	<f:selectItem itemLabel="#{category.numeroChambre}" itemValue="#{category.id}">
+                </f:selectItem>
+            </c:forEach>
+        </h:selectOneMenu>
+	<p:commandButton value="Réserver" action="#{reservationBean.reserver}"/>
+	</h:panelGrid>
+	
+	</h:form>
+          </div><!-- panel body Client-->
+     </div><!-- panel panel-default Client--> 
+         
+</div>
+</body>
+</html>

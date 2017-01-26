@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+ xmlns:h="http://xmlns.jcp.org/jsf/html"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:f="http://xmlns.jcp.org/jsf/core"
+ xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Paiement</title>
+</h:head>
+<body>
+<h:outputStylesheet name="css/bootstrap.css" />
+<h:outputScript name="resources/js/bootstrap.js" />
+<ui:include src="navbar.xhtml" />
+
+<div class="container">
+  	
+<br></br>
+<br></br>
+
+		<div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Paiement</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Facture
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form>
+                                    
+									  	<!-- Facture by Client and Hotel Selection -->
+									  	<div class="form-groupe">
+									  		<!-- Hotel Selection -->
+									  		<h:form id="formSelectHotel">
+									  		<h:outputLabel value="Hotel : "></h:outputLabel>
+				                            <h:selectOneMenu class="form-control" value="#{paiementBean.idHotel}">
+				                            	<f:ajax event="change" update=":formSelectClient,:formSelectFacture,:formInfoFacture" render=":formSelectClient :formSelectFacture :formInfoFacture" listener="#{paiementBean.selectHotel}" />
+									  			<f:selectItem itemLabel="" itemValue="" />
+						                        <c:forEach var="hotel" items="#{paiementBean.hotels}">
+						                            <f:selectItem itemLabel="#{hotel.nom}" itemValue="#{hotel.id}" />
+						                        </c:forEach>
+						                    </h:selectOneMenu>
+						                    </h:form>
+									
+									  		<br></br>
+									
+											<!-- Client Selection -->
+ 											<h:form id="formSelectClient">
+									  		<h:outputLabel value="Client : "></h:outputLabel>
+				                            <h:selectOneMenu class="form-control" value="#{paiementBean.idClient}">
+				                            	<f:ajax event="change" update=":formSelectFacture,:formInfoFacture" render=":formSelectFacture :formInfoFacture" listener="#{paiementBean.selectClient}" />
+									  			<f:selectItem itemLabel="" itemValue="" />
+						                        <c:forEach var="client" items="#{paiementBean.clients}">
+						                            <f:selectItem itemLabel="#{client.nom} #{client.prenom}" itemValue="#{client.idPersonne}" />
+						                        </c:forEach>
+						                    </h:selectOneMenu>
+ 						                    </h:form>
+									  		
+									  		<br></br>
+									
+											<!-- Facture Selection -->
+ 											<h:form id="formSelectFacture">
+									  		<h:outputLabel value="Facture du (date d'arrivée) : "></h:outputLabel>
+				                            <h:selectOneMenu class="form-control" value="#{paiementBean.idFacture}">
+				                            	<f:ajax event="change" update=":formInfoFacture" render=":formInfoFacture" listener="#{paiementBean.selectFacture}" />
+									  			<f:selectItem itemLabel="" itemValue="" />
+						                        <c:forEach var="facture" items="#{paiementBean.refFacture}">
+						                            <f:selectItem itemLabel="#{facture.key}" itemValue="#{facture.value}" />
+						                        </c:forEach>
+						                    </h:selectOneMenu>
+ 						                    </h:form>
+									  	
+										  	<br></br>
+										  	
+										  	<!-- Facture main informations -->
+										  	<h:form id="formInfoFacture">
+										  	<c:if test="#{paiementBean.idFacture ne 0}">
+										  	<div class="form-groupe">
+										  		<h:outputLabel value="Facture de M./Mme. #{paiementBean.nomClient} #{paiementBean.prenomClient} du #{paiementBean.dateEntree} au #{paiementBean.dateSortie} : #{paiementBean.montantFacture} euros"></h:outputLabel>
+										  	</div>
+										  	</c:if>
+										  	</h:form>
+										  	
+										  	<br></br>
+										  	
+										  	<!-- Print Facture (PDF) -->
+											<div>
+												<p:commandButton value="Afficher la facture" action="#{paiementBean.generatePdf}" type="btn btn-info"/>
+											</div>
+                                        
+									  	</div>
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Paiement
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form>
+                                    
+									  	<!-- Facture by Client and Hotel Selection -->
+									  	<div class="form-groupe">
+
+											<!-- Paiement Type Selection -->
+											
+										    <p:tabView>
+										    	<!-- Carte Banquaire -->
+										        <p:tab>
+										        	<f:facet name="title">
+													<h:outputLabel>
+														<h:graphicImage name="img/credit-cards-payment.png"/>
+														<br></br>
+														Carte Banquaire
+													</h:outputLabel>
+										            </f:facet>
+													<h:form>
+													<div>
+														<h:outputLabel value="Type de carte : "></h:outputLabel>
+															<p:outputPanel id="customPanelCb" style="margin-bottom:10px">
+													        <p:selectOneRadio id="carteType" value="#{paiementBean.typeCarte}" layout="custom">
+													            <f:selectItem itemLabel="carte visa" itemValue="carteVisa" />
+													            <f:selectItem itemLabel="mastercard" itemValue="mastercard" />
+													            <f:selectItem itemLabel="american express" itemValue="americanExpress" />
+													            <f:selectItem itemLabel="maestro" itemValue="maestro" />
+													        </p:selectOneRadio>
+												
+															<h:panelGrid columns="4" style="margin:auto" width="500">
+														        <h:outputLabel for="optC1">
+																	<h:graphicImage name="img/visa.png"/>
+																	<br></br>
+																	carte visa
+																</h:outputLabel>
+																
+														        <h:outputLabel for="optC2">
+																	<h:graphicImage name="img/mastercard.png"/>
+																	<br></br>
+																	mastercard
+																</h:outputLabel>
+														
+														        <h:outputLabel for="optC3">
+																	<h:graphicImage name="img/american-express.png"/>
+																	<br></br>
+																	american express
+																</h:outputLabel>
+												
+														        <h:outputLabel for="optC4">
+																	<h:graphicImage name="img/maestro.png"/>
+																	<br></br>
+																	maestro
+																</h:outputLabel>
+												
+														        <p:radioButton id="optC1" for="carteType" itemIndex="0" />
+														        <p:radioButton id="optC2" for="carteType" itemIndex="1" />
+														        <p:radioButton id="optC3" for="carteType" itemIndex="2" />
+														        <p:radioButton id="optC4" for="carteType" itemIndex="3" />
+													    	</h:panelGrid>
+											    		</p:outputPanel>
+														<h:outputLabel value="Numéro de carte :"></h:outputLabel>
+														<h:inputText class="form-control" requiredMessage="obligatoire" required="true" value="#{paiementBean.numCarte}"></h:inputText>
+													</div>
+													<br></br>
+													<div>
+														<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+														<p:commandButton value="Payement" type="btn btn-info" action="#{paiementBean.addPaiementCb}"/>
+													</div>
+													</h:form>
+										        </p:tab>
+										        
+										        <!-- Cheque -->
+										        <p:tab>
+										        	<f:facet name="title">
+											        <h:outputLabel>
+														<h:graphicImage name="img/checked.png"/>
+														<br></br>
+														Chèque
+													</h:outputLabel>
+													</f:facet>
+													<h:form>
+													<div>
+														<h:outputLabel value="Banque : "></h:outputLabel>
+													    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+													        <p:selectOneRadio id="banqueType" value="#{paiementBean.banqueCheque}" style="margin:auto" width="1000" layout="grid" columns="1">
+													            <f:selectItem itemLabel="BNP" itemValue="BNP" />
+													            <f:selectItem itemLabel="CIC" itemValue="CIC" />
+													            <f:selectItem itemLabel="LCL" itemValue="LCL" />
+													            <f:selectItem itemLabel="Crédit Agricol" itemValue="creditAgricol" />
+													            <f:selectItem itemLabel="Société Générale" itemValue="societeGenerale" />
+													        </p:selectOneRadio>
+													       </h:panelGrid>
+														<h:outputLabel value="Numéro de chèque :"></h:outputLabel>
+														<h:inputText class="form-control" requiredMessage="obligatoire" required="true" value="#{paiementBean.numCheque}"></h:inputText>
+													</div>
+													<br></br>
+													<div>
+														<p:commandButton value="Payement" type="btn btn-info" action="#{paiementBean.addPaiementCheque}"/>
+													</div>
+													</h:form>
+										        </p:tab>
+										        
+										        <!-- Espece -->
+										        <p:tab>
+										        	<f:facet name="title">
+											        <h:outputLabel>
+														<h:graphicImage name="img/cash.png"/>
+														<br></br>
+														Espèce
+													</h:outputLabel>
+													</f:facet>
+													<h:form>
+													<div>
+														<h:outputLabel value="Devise : "></h:outputLabel>
+															<p:outputPanel id="customPanelEspece" style="margin-bottom:10px">
+													        <p:selectOneRadio id="deviseType" value="#{paiementBean.devise}" layout="custom">
+													            <f:selectItem itemLabel="Euro" itemValue="euro" />
+													            <f:selectItem itemLabel="Dollar US" itemValue="dollarUS" />
+													            <f:selectItem itemLabel="Livre Sterling" itemValue="livreSterling" />
+													            <f:selectItem itemLabel="Yen" itemValue="yen" />
+													            <f:selectItem itemLabel="Yuan" itemValue="yuan" />
+													        </p:selectOneRadio>
+												
+															<h:panelGrid columns="5" style="margin:auto" width="500">
+														        <h:outputLabel for="optE1">
+																	<h:graphicImage name="img/euro.png"/>
+																	<br></br>
+																	Euro
+																</h:outputLabel>
+																
+														        <h:outputLabel for="optE2">
+																	<h:graphicImage name="img/dollar-symbol.png"/>
+																	<br></br>
+																	Dollar US
+																</h:outputLabel>
+														
+														        <h:outputLabel for="optE3">
+																	<h:graphicImage name="img/pound-sterling.png"/>
+																	<br></br>
+																	Livre Sterling
+																</h:outputLabel>
+												
+														        <h:outputLabel for="optE4">
+																	<h:graphicImage name="img/yen-symbol.png"/>
+																	<br></br>
+																	Yen
+																</h:outputLabel>
+																
+														        <h:outputLabel for="optE5">
+																	<h:graphicImage name="img/yen-symbol.png"/>
+																	<br></br>
+																	Yuan
+																</h:outputLabel>
+												
+														        <p:radioButton id="optE1" for="deviseType" itemIndex="0" />
+														        <p:radioButton id="optE2" for="deviseType" itemIndex="1" />
+														        <p:radioButton id="optE3" for="deviseType" itemIndex="2" />
+														        <p:radioButton id="optE4" for="deviseType" itemIndex="3" />
+														        <p:radioButton id="optE5" for="deviseType" itemIndex="4" />
+													    	</h:panelGrid>
+											    		</p:outputPanel>
+													</div>
+													<br></br>
+													<div>
+														<p:commandButton value="Payement" type="btn btn-info" action="#{paiementBean.addPaiementEspece}"/>
+													</div>
+													</h:form>
+										        </p:tab>
+										    </p:tabView>
+									    	
+                                        
+									  	</div>
+                                    </form>
+                                </div>
+                                
+                                
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+	
+</div>
+
+</body>
+</html>
