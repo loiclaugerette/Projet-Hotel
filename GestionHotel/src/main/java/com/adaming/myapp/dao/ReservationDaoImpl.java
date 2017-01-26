@@ -1,10 +1,3 @@
-/* ReservationDaoImpl
- *Version: 1.0.0
- *Date: 06-12-2016
- *Author: Guillaume Campo
- */
-
-
 package com.adaming.myapp.dao;
 
 import java.util.List;

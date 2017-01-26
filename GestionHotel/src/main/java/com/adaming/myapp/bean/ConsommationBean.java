@@ -1,10 +1,3 @@
-/*
- * ConsommationBean
- * Version: 1.0.0
- * Date: 10-12-2016
- * Author: Brice Touchard
- */
-
 package com.adaming.myapp.bean;
 
 import java.util.ArrayList;

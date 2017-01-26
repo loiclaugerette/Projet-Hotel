@@ -1,10 +1,3 @@
-/*
- * IChambreFactory
- * Version: 1.0.0
- * Date: 05-12-2016
- * Author: Etienne Lorteau
- */
-
 package com.adaming.myapp.dao;
 
 import java.util.List;
@@ -14,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.adaming.myapp.entities.Chambre;
+
 
 public class ChambreDaoImpl implements IChambreDao{
 

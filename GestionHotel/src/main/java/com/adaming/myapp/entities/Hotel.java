@@ -1,12 +1,5 @@
-/* Hotel
- *Version: 1.0.1
- *Date: 05-12-2016
- *Author: Guillaume Campo
- */
-
 package com.adaming.myapp.entities;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

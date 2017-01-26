@@ -1,10 +1,3 @@
-/*
- * PaiementBean
- * Version: 1.0.0
- * Date: 08-12-2016
- * Author: Etienne Lorteau
- */
-
 package com.adaming.myapp.bean;
 
 import java.io.FileOutputStream;

@@ -1,6 +1,5 @@
 package com.adaming.myapp.bean;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,12 +15,9 @@ import com.adaming.myapp.abstractfactory.ChambreFactoryImpl;
 import com.adaming.myapp.abstractfactory.IChambreFactory;
 import com.adaming.myapp.entities.Adresse;
 import com.adaming.myapp.entities.Chambre;
-import com.adaming.myapp.entities.ChambreDouble;
 import com.adaming.myapp.entities.ChambreSimple;
-import com.adaming.myapp.entities.Client;
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
-import com.adaming.myapp.entities.Suite;
 import com.adaming.myapp.exceptions.NonValidClassTypeException;
 import com.adaming.myapp.exceptions.NullListException;
 import com.adaming.myapp.service.IChambreService;

@@ -8,6 +8,7 @@ import com.adaming.myapp.dao.IFactureDao;
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.exceptions.NullListException;
 
+
 @Transactional
 public class FactureServiceImpl implements IFactureService{
 	

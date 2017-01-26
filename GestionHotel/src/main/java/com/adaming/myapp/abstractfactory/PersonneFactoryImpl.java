@@ -10,6 +10,7 @@ import com.adaming.myapp.entities.Personne;
 import com.adaming.myapp.entities.Stagiaire;
 import com.adaming.myapp.exceptions.NonValidClassTypeException;
 
+
 public class PersonneFactoryImpl implements IPersonneFactory{
 
 	@Override

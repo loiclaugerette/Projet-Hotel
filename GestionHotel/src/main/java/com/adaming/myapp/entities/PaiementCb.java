@@ -1,9 +1,5 @@
 package com.adaming.myapp.entities;
-/* PaiementCb
-*  Version: 1.0.0
-*  Date: 05-12-2016
-*  Author: Brice Touchard
-*/	
+
 import java.util.Date;
 
 import javax.persistence.DiscriminatorValue;

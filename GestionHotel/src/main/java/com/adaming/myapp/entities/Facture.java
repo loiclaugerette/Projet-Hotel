@@ -4,13 +4,6 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-/*
-* Facture
-* Version: 1.0.1
-* Date: 05-12-2016
-* Author: Brice Touchard
-*/	
-
 @Entity
 public class Facture {
 	

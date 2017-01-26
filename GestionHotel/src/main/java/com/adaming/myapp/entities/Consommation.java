@@ -2,12 +2,6 @@ package com.adaming.myapp.entities;
 
 import javax.persistence.*;
 
-/* Consommation
-*  Version: 1.0.0
-*  Date: 05-12-2016
-*  Author: Brice Touchard
-*/	
-
 @Entity
 public class Consommation {
 	

@@ -1,10 +1,3 @@
-/* 
- * PaiementFactoryImpl
- * Version: 1.0.0
- * Date: 05-12-2016
- * Author: Brice Touchard
- */
-
 package com.adaming.myapp.abstractfactory;
 
 import java.util.Date;

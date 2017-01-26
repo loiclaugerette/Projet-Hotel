@@ -1,5 +1,6 @@
 package com.adaming.myapp.bean;
 
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

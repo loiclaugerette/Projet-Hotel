@@ -1,6 +1,5 @@
 package com.adaming.myapp.dao;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,7 +8,6 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.adaming.myapp.entities.Adresse;
 import com.adaming.myapp.entities.Chambre;
 import com.adaming.myapp.entities.Client;
 import com.adaming.myapp.entities.Employe;

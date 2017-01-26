@@ -1,5 +1,6 @@
 package com.adaming.myapp.exceptions;
 
+
 @SuppressWarnings("serial")
 public class FactureDejaPayeeException extends Exception {
 

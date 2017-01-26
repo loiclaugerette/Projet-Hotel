@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.adaming.myapp.entities.Facture;
 
+
 public interface IFactureDao {
 	
 	public Facture create(final Facture f, final Long idHotel);

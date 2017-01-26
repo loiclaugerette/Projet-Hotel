@@ -1,17 +1,9 @@
 package com.adaming.myapp.service.test;
 
-/* Hotel
- *Version: 1.0.0
- *Date: 06-12-2016
- *Author: Brice Touchard
- */
-
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +22,6 @@ import com.adaming.myapp.entities.Adresse;
 import com.adaming.myapp.entities.Chambre;
 import com.adaming.myapp.entities.ChambreSimple;
 import com.adaming.myapp.entities.Client;
-import com.adaming.myapp.entities.Employe;
 import com.adaming.myapp.entities.Facture;
 import com.adaming.myapp.entities.Hotel;
 import com.adaming.myapp.entities.Personne;

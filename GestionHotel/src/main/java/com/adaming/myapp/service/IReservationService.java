@@ -1,9 +1,3 @@
-/* IReservationService
- *Version: 1.0.0
- *Date: 06-12-2016
- *Author: Guillaume Campo
- */
-
 package com.adaming.myapp.service;
 
 import java.util.List;
